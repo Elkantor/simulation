@@ -11,12 +11,18 @@ int main(){
 
 	// Cells colors indexes
 	int cells_colors[simulation_rectangles_size];
-	// GUI on the right
+	// GUI on the right for the "1" button
 	cells_colors[0] = SIMULATION_BLUE;
 	// Cells inside the canva
 	for(unsigned short i = 1; i < simulation_rectangles_size; ++i){
 		cells_colors[i] = SIMULATION_GRAY;
 	}
+
+	// Save key pressed
+	unsigned char key_pressed;
+	
+	// Temp char buffer for drawing text on screen
+	char text_buffer[200];
 
 	while(!WindowShouldClose()){
 		BeginDrawing();
@@ -44,6 +50,46 @@ int main(){
 				);
 			}
 
+			// Handle the keyboard
+			{
+				int current_key_pressed = GetKeyPressed();
+				if(current_key_pressed != -1 ){
+					key_pressed = current_key_pressed;
+					sprintf(text_buffer, "Key pressed: %d", current_key_pressed);
+					DrawText(text_buffer, 500, 100, 24, BLUE);					
+				}
+			}
+
+			Vector2 mouse_position = GetMousePosition();
+			sprintf(text_buffer, "Mouse position: %f %f", mouse_position.x, mouse_position.y);
+			DrawText(text_buffer, 500, 50, 24, BLUE);
+			
+			const Rectangle canva_wall = { SIMULATION_CANVA_X, SIMULATION_CANVA_Y, SIMULATION_CANVA_WIDTH, SIMULATION_CANVA_HEIGHT };
+			// Check if the mouse is overing the canva
+			if(mouse_position.x >= canva_wall.x 
+				&& mouse_position.x <= (canva_wall.x + canva_wall.width)
+				&& mouse_position.y >= canva_wall.y
+				&& mouse_position.y <= (canva_wall.y + canva_wall.height)
+			){
+				unsigned char overed_column_x = (mouse_position.x  - SIMULATION_CANVA_X) / SIMULATION_CELL;
+				unsigned char overed_column_y = (mouse_position.y  - SIMULATION_CANVA_Y) / SIMULATION_CELL;
+
+				unsigned short index_cell_canva_overed = ((overed_column_x) * number_cells_height) + overed_column_y + 1;
+				switch(key_pressed){
+					case 49:
+						cells_colors[index_cell_canva_overed] = SIMULATION_GRAY;
+						break;
+					case 50:
+						cells_colors[index_cell_canva_overed] = SIMULATION_BLUE;
+						break;
+					default:
+						break;
+				}
+				// Reinit the key pressed
+				key_pressed = -1;
+			}
+
+
 			/* Draw the entities */
 			for(unsigned short i = 0; i < simulation_rectangles_size ; ++i){
 				DrawRectangle(
@@ -54,13 +100,9 @@ int main(){
 					GetColor((int)cells_colors[i])
 				);
 			}
-			Vector2 mouse_position = GetMousePosition();
-			const Rectangle gui_wall = { simulation_rectangles[0][0], simulation_rectangles[0][1], simulation_rectangles[0][2], simulation_rectangles[0][3] };
-			if(mouse_position.x >= gui_wall.x){
-				if(mouse_position.x <= (gui_wall.x + gui_wall.width)){
-					DrawText("INSIDE !", 300, 300, 18, BLUE);
-				}
-			}
+			/* Draw GUI number */
+			DrawText("1", simulation_rectangles[161][0] + 31, simulation_rectangles[161][1]+ 12, 64, WHITE);
+			DrawText("2", simulation_rectangles[0][0] + 24, simulation_rectangles[0][1]+ 12, 64, WHITE);
 		EndDrawing();
 	}
 	CloseWindow();
