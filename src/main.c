@@ -9,17 +9,18 @@ int main(){
 	const unsigned short number_cells_width = (SIMULATION_CANVA_WIDTH) / (SIMULATION_CELL);
 	const unsigned short number_cells_height = (SIMULATION_CANVA_HEIGHT) / (SIMULATION_CELL);
 
+	// Cells colors indexes
+	int cells_colors[simulation_rectangles_size];
+	// GUI on the right
+	cells_colors[0] = SIMULATION_BLUE;
+	// Cells inside the canva
+	for(unsigned short i = 1; i < simulation_rectangles_size; ++i){
+		cells_colors[i] = SIMULATION_GRAY;
+	}
+
 	while(!WindowShouldClose()){
-		printf("%d\n", ColorToInt(GRAY));
 		BeginDrawing();
 			ClearBackground(LIGHTGRAY);
-			// DrawRectangle(
-			// 	SIMULATION_CANVA_X, 
-			// 	SIMULATION_CANVA_Y, 
-			// 	SIMULATION_CANVA_WIDTH,
-			// 	SIMULATION_CANVA_HEIGHT,
-			// 	GRAY
-			// );			
 			
 			/* Draw the grid inside the canva */
 			// Draw the X lines
@@ -50,7 +51,7 @@ int main(){
 					simulation_rectangles[i][1], 
 					simulation_rectangles[i][2], 
 					simulation_rectangles[i][3],
-					GetColor((int)simulation_rectangles[i][4])
+					GetColor((int)cells_colors[i])
 				);
 			}
 			Vector2 mouse_position = GetMousePosition();
