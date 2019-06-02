@@ -197,3 +197,13 @@ const unsigned short simulation_rectangles[][4] = {
         { (SIMULATION_CANVA_X) + (SIMULATION_CANVA_WIDTH) + (SIMULATION_CELL), SIMULATION_CANVA_Y + (4*(SIMULATION_CELL)), (SIMULATION_CELL), (SIMULATION_CELL) }, // GREEN BUTTON
 };
 const unsigned short simulation_rectangles_size = sizeof(simulation_rectangles) / sizeof(simulation_rectangles[0]);
+
+
+const unsigned char simulation_arrows_directions[] = {
+    0,  // no arrows directions
+    118,  // arrow on the left
+    119,  // arrow on the right
+    120,  // arrow on the bottom
+    121,  // arrow on the top
+};
+const unsigned short simulation_arrows_directions_size = sizeof(simulation_arrows_directions) / sizeof(simulation_arrows_directions[0]);
