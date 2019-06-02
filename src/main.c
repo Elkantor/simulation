@@ -2,6 +2,27 @@
 #include <raylib.h>
 
 #include "simulation/variables.c"
+#include "simulation/icons.c"
+
+// Draw selected icon using rectangles pixel-by-pixel
+void DrawIcon(int iconId, Vector2 position, int pixelSize, Color color){
+    #define BIT_CHECK(a,b) ((a) & (1<<(b)))
+
+    for (int i = 0, y = 0; i < RICONS_SIZE*RICONS_SIZE/32; i++)
+    {
+        for (int k = 0; k < 32; k++)
+        {
+            if (BIT_CHECK(RICONS[8*iconId + i], k)) 
+            {
+            #if !defined(RICONS_STANDALONE)
+                DrawRectangle(position.x + (k%RICONS_SIZE)*pixelSize, position.y + y*pixelSize, pixelSize, pixelSize, color);
+            #endif
+            }
+            
+            if ((k == 15) || (k == 31)) y++;
+        }
+    }
+}
 
 int main(){
 	InitWindow(1920, 1080, "test");
@@ -11,10 +32,10 @@ int main(){
 
 	// Cells colors indexes
 	int cells_colors[simulation_rectangles_size];
-	// GUI on the right for the "1" button
-	cells_colors[0] = SIMULATION_BLUE;
+	cells_colors[0] = SIMULATION_BLUE; 		// GUI on the right for the "2" blue button
+	cells_colors[162] = SIMULATION_GREEN;	// GUI on the right for the "3" green button
 	// Cells inside the canva
-	for(unsigned short i = 1; i < simulation_rectangles_size; ++i){
+	for(unsigned short i = 1; i < simulation_rectangles_size-1; ++i){
 		cells_colors[i] = SIMULATION_GRAY;
 	}
 
@@ -76,10 +97,10 @@ int main(){
 
 				unsigned short index_cell_canva_overed = ((overed_column_x) * number_cells_height) + overed_column_y + 1;
 				switch(key_pressed){
-					case 49:
+					case 49: // if the "1" key is pressed (for the 1 button gui)
 						cells_colors[index_cell_canva_overed] = SIMULATION_GRAY;
 						break;
-					case 50:
+					case 50: // if the "2" key is pressed (for the 2 button gui)
 						cells_colors[index_cell_canva_overed] = SIMULATION_BLUE;
 						break;
 					default:
@@ -101,8 +122,14 @@ int main(){
 				);
 			}
 			/* Draw GUI number */
-			DrawText("1", simulation_rectangles[161][0] + 31, simulation_rectangles[161][1]+ 12, 64, WHITE);
-			DrawText("2", simulation_rectangles[0][0] + 24, simulation_rectangles[0][1]+ 12, 64, WHITE);
+			DrawText("1", simulation_rectangles[161][0] + 31, simulation_rectangles[161][1]+ 12, 64, WHITE); // Default button (GRAT)
+			DrawText("2", simulation_rectangles[0][0] + 24, simulation_rectangles[0][1]+ 12, 64, WHITE); // Wall button (BLUE)
+			DrawText("3", simulation_rectangles[162][0] + 24, simulation_rectangles[162][1]+ 12, 60, WHITE); // Path button (GREEN)
+			// Draw the directional arrows on the "3" green buttons
+			DrawIcon(RICON_ARROW_TOP_FILL, (Vector2) { simulation_rectangles[162][0] + 25, simulation_rectangles[162][1] - (0.1*(SIMULATION_CELL)) }, 2, ORANGE);
+			DrawIcon(RICON_ARROW_LEFT_FILL, (Vector2) { simulation_rectangles[162][0] - 4, simulation_rectangles[162][1] + (0.28*(SIMULATION_CELL)) }, 2, ORANGE);
+			DrawIcon(RICON_ARROW_RIGHT_FILL, (Vector2) { simulation_rectangles[162][0] + 52, simulation_rectangles[162][1] + (0.28*(SIMULATION_CELL)) }, 2, ORANGE);
+			DrawIcon(RICON_ARROW_BOTTOM_FILL, (Vector2) { simulation_rectangles[162][0] + 25, simulation_rectangles[162][1] + (0.7*(SIMULATION_CELL)) }, 2, ORANGE);
 		EndDrawing();
 	}
 	CloseWindow();
