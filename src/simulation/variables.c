@@ -5,12 +5,22 @@
 #define SIMULATION_CELL         80
 #define SIMULATION_CELL_X       SIMULATION_CELL + (SIMULATION_CANVA_X)
 #define SIMULATION_CELL_Y       SIMULATION_CELL + (SIMULATION_CANVA_Y)
+#define SIMULATION_CIRCLE       40
 
 #define SIMULATION_BLUE         7991807
 #define SIMULATION_LIGHTGRAY    -926365441
 #define SIMULATION_GRAY         -2105376001
 #define SIMULATION_RED          -433506305
 #define SIMULATION_GREEN        14954751
+
+const unsigned char simulation_arrows_directions[] = {
+    0,  // no arrows directions
+    118,  // arrow on the left
+    119,  // arrow on the right
+    120,  // arrow on the bottom
+    121,  // arrow on the top
+};
+const unsigned short simulation_arrows_directions_size = sizeof(simulation_arrows_directions) / sizeof(simulation_arrows_directions[0]);
 
 const unsigned short simulation_rectangles[][4] = {
     /* GUI on the right */
@@ -192,18 +202,11 @@ const unsigned short simulation_rectangles[][4] = {
         { (15*SIMULATION_CELL_X)+1, (7*SIMULATION_CELL_Y)+1, (SIMULATION_CELL)-2, (SIMULATION_CELL)-2 },
         { (15*SIMULATION_CELL_X)+1, (8*SIMULATION_CELL_Y)+1, (SIMULATION_CELL)-2, (SIMULATION_CELL)-2 },
         { (15*SIMULATION_CELL_X)+1, (9*SIMULATION_CELL_Y)+1, (SIMULATION_CELL)-2, (SIMULATION_CELL)-2 },
-    // GUI on the right
-        { (SIMULATION_CANVA_X) + (SIMULATION_CANVA_WIDTH) + (SIMULATION_CELL), SIMULATION_CANVA_Y, (SIMULATION_CELL), (SIMULATION_CELL) }, // BLUE BUTTON
-        { (SIMULATION_CANVA_X) + (SIMULATION_CANVA_WIDTH) + (SIMULATION_CELL), SIMULATION_CANVA_Y + (4*(SIMULATION_CELL)), (SIMULATION_CELL), (SIMULATION_CELL) }, // GREEN BUTTON
+    /* GUI on the right */
+        { (SIMULATION_CANVA_X) + (SIMULATION_CANVA_WIDTH) + (SIMULATION_CELL), SIMULATION_CANVA_Y, (SIMULATION_CELL), (SIMULATION_CELL) }, // BLUE WALL BUTTON
+        { (SIMULATION_CANVA_X) + (SIMULATION_CANVA_WIDTH) + (SIMULATION_CELL), SIMULATION_CANVA_Y + (4*(SIMULATION_CELL)), (SIMULATION_CELL), (SIMULATION_CELL) }, // GREEN PATH BUTTON
+        { (SIMULATION_CANVA_X) + (SIMULATION_CANVA_WIDTH) + (SIMULATION_CELL), SIMULATION_CANVA_Y + (6*(SIMULATION_CELL)), (SIMULATION_CELL), (SIMULATION_CELL) }, // RED SPAWNING BUTTON
+
 };
 const unsigned short simulation_rectangles_size = sizeof(simulation_rectangles) / sizeof(simulation_rectangles[0]);
 
-
-const unsigned char simulation_arrows_directions[] = {
-    0,  // no arrows directions
-    118,  // arrow on the left
-    119,  // arrow on the right
-    120,  // arrow on the bottom
-    121,  // arrow on the top
-};
-const unsigned short simulation_arrows_directions_size = sizeof(simulation_arrows_directions) / sizeof(simulation_arrows_directions[0]);
