@@ -174,6 +174,12 @@ int main(){
 			DrawIcon(RICON_ARROW_LEFT_FILL, (Vector2) { simulation_rectangles[162][0] - 4, simulation_rectangles[162][1] + (0.28*(SIMULATION_CELL)) }, 2, ORANGE);
 			DrawIcon(RICON_ARROW_RIGHT_FILL, (Vector2) { simulation_rectangles[162][0] + 52, simulation_rectangles[162][1] + (0.28*(SIMULATION_CELL)) }, 2, ORANGE);
 			DrawIcon(RICON_ARROW_BOTTOM_FILL, (Vector2) { simulation_rectangles[162][0] + 25, simulation_rectangles[162][1] + (0.7*(SIMULATION_CELL)) }, 2, ORANGE);
+			// Draw text on the right GUI buttons
+			DrawText("Empty cell", simulation_rectangles[161][0] + (SIMULATION_CELL)*1.5, simulation_rectangles[161][1]+ 24, 24, GRAY); 	// text default gray button
+			DrawText("Wall cell", simulation_rectangles[0][0] + (SIMULATION_CELL)*1.5, simulation_rectangles[0][1]+ 24, 24, GRAY); 			// text wall blue button			
+			DrawText("Path cell", simulation_rectangles[162][0] + (SIMULATION_CELL)*1.5, simulation_rectangles[162][1]+ 24, 24, GRAY); 		// text path green button			
+			DrawText("Spawning point", simulation_rectangles[163][0] + (SIMULATION_CELL)*1.5, simulation_rectangles[163][1]+ 24, 24, GRAY); // text red spawning button			
+		
 		EndDrawing();
 	}
 	CloseWindow();
