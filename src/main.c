@@ -110,14 +110,17 @@ int main(){
 					case 49: // Key 1 (for the 1 button gui)
 						cells_colors[index_cell_canva_overed] = SIMULATION_GRAY;
 						cells_arrows_directions[index_cell_canva_overed] = simulation_arrows_directions[0];	// Reinit the arrows for the cell
+						if(index_cell_canva_overed == index_cell_spawn){ index_cell_spawn = -1; } // Check if the cell overed is the spawning cell
 						break;
 					case 50: // Key 2 (for the 2 button gui)
 						cells_colors[index_cell_canva_overed] = SIMULATION_BLUE;
 						cells_arrows_directions[index_cell_canva_overed] = simulation_arrows_directions[0];	// Reinit the arrows for the cell
+						if(index_cell_canva_overed == index_cell_spawn){ index_cell_spawn = -1; } // Check if the cell overed is the spawning cell
 						break;
 					case 51: // Key 3 (for the 3 button gui)
 						cells_colors[index_cell_canva_overed] = SIMULATION_GREEN;
 						cells_arrows_directions[index_cell_canva_overed] = simulation_arrows_directions[0];	// Reinit the arrows for the cell
+						if(index_cell_canva_overed == index_cell_spawn){ index_cell_spawn = -1; } // Check if the cell overed is the spawning cell
 						break;
 					case 52: // Key 4 (for the 4 red spawning button gui)
 						cells_colors[index_cell_spawn] = SIMULATION_GRAY; // Reinit the previous spawn cell
