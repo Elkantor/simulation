@@ -47,7 +47,8 @@ int main(){
 	int key_pressed;
 
 	// Save index cell spawn
-	unsigned char index_cell_spawn = 10;
+	unsigned char index_cell_spawn = 160;
+	cells_colors[160] = SIMULATION_RED; // Make the 160th cell (last one right corner) the spawning cell by default
 	
 	// Temp char buffer for drawing text on screen
 	char text_buffer[200];
@@ -79,7 +80,7 @@ int main(){
 			}
 
 					
-			// Handle the keyboard
+			// Handle the keyboard (save the current pressed key)
 			{
 				int current_key_pressed = GetKeyPressed();
 				if(IsKeyDown(KEY_UP)){ current_key_pressed = KEY_UP; }
@@ -118,7 +119,7 @@ int main(){
 						cells_colors[index_cell_canva_overed] = SIMULATION_GREEN;
 						cells_arrows_directions[index_cell_canva_overed] = simulation_arrows_directions[0];	// Reinit the arrows for the cell
 						break;
-					case 52: // Key 5 (for the 5 red spawning button gui)
+					case 52: // Key 4 (for the 4 red spawning button gui)
 						cells_colors[index_cell_spawn] = SIMULATION_GRAY; // Reinit the previous spawn cell
 						index_cell_spawn = index_cell_canva_overed; // Update the index of the new spawn cell
 						cells_colors[index_cell_canva_overed] = SIMULATION_RED;
@@ -164,6 +165,10 @@ int main(){
 				}
 			}
 
+			/* Draw "spawn" text on the spawn button (if there's one) */
+			const unsigned short* spawn_cell = simulation_rectangles[index_cell_spawn];
+			DrawText("Spawn", *(spawn_cell+0), *(spawn_cell+1) + (SIMULATION_CELL*0.25), 24, WHITE);
+
 			/* Draw numbers on the GUI buttons */
 			DrawText("1", simulation_rectangles[161][0] + 31, simulation_rectangles[161][1]+ 12, 64, WHITE); 	// Default button (GRAY)
 			DrawText("2", simulation_rectangles[0][0] + 24, simulation_rectangles[0][1]+ 12, 64, WHITE); 		// Wall button (BLUE)
@@ -174,7 +179,7 @@ int main(){
 			DrawIcon(RICON_ARROW_LEFT_FILL, (Vector2) { simulation_rectangles[162][0] - 4, simulation_rectangles[162][1] + (0.28*(SIMULATION_CELL)) }, 2, ORANGE);
 			DrawIcon(RICON_ARROW_RIGHT_FILL, (Vector2) { simulation_rectangles[162][0] + 52, simulation_rectangles[162][1] + (0.28*(SIMULATION_CELL)) }, 2, ORANGE);
 			DrawIcon(RICON_ARROW_BOTTOM_FILL, (Vector2) { simulation_rectangles[162][0] + 25, simulation_rectangles[162][1] + (0.7*(SIMULATION_CELL)) }, 2, ORANGE);
-			// Draw text on the right GUI buttons
+			// Draw texts on the right GUI buttons
 			DrawText("Empty cell", simulation_rectangles[161][0] + (SIMULATION_CELL)*1.5, simulation_rectangles[161][1]+ 24, 24, GRAY); 	// text default gray button
 			DrawText("Wall cell", simulation_rectangles[0][0] + (SIMULATION_CELL)*1.5, simulation_rectangles[0][1]+ 24, 24, GRAY); 			// text wall blue button			
 			DrawText("Path cell", simulation_rectangles[162][0] + (SIMULATION_CELL)*1.5, simulation_rectangles[162][1]+ 24, 24, GRAY); 		// text path green button			
